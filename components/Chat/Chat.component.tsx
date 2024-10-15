@@ -101,7 +101,7 @@ const ChatBox = forwardRef<CustomRef, ChatProps>((props, ref) => {
         return conversationRef?.current
       },
       focus: () => {
-        textAreaRef.current?.focus()
+        // textAreaRef.current?.focus()
       }
     }
   })

@@ -2,12 +2,13 @@
 import { Chat } from '@/components'
 import { useChatContext } from '@/components'
 import { ChatContextType } from '@/components/Chat/context'
+import { Suspense } from 'react'
 
 import Wrapper from '@/components/Wrapper.component'
 import Contexts from '@/components/Contexts.component'
 import SideBarChatList from '@/components/Chat/components/SideBarChatList.component'
 
-const ChatPage = () => {
+const InnerPage = () => {
   const chatProvider: ChatContextType = useChatContext()
 
   return (
@@ -19,4 +20,10 @@ const ChatPage = () => {
   )
 }
 
-export default ChatPage
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <InnerPage />
+    </Suspense>
+  )
+}

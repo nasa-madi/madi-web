@@ -5,6 +5,7 @@ import Wrapper from '@/components/Wrapper.component'
 import Contexts from '@/components/Contexts.component'
 import { NetworkGraph, NetworkGraphOptions } from '@/components/Visuals/NetworkGraph/NetworkGraph'
 import { Flex, Select } from '@radix-ui/themes'
+import { Suspense } from 'react'
 
 interface SideBarVisualsProps {
   selectedGraph: string
@@ -32,7 +33,7 @@ const SideBarVisuals = ({ selectedGraph, onSelectChange }: SideBarVisualsProps) 
   return (
     <Flex className="h-full" gap={'3'} direction={'column'}>
       <Select.Root defaultValue="networkGraph" onValueChange={onSelectChange} size="2">
-        <Select.Trigger variant="soft" className="w-full" />
+        <Select.Trigger variant="surface" className="w-full dark:text-white" />
         <Select.Content className="w-full">
           <Select.Group className="w-full">
             <Select.Item value="networkGraph">Network Graph</Select.Item>
@@ -73,15 +74,17 @@ const NetworkGraphPage = () => {
   }
 
   return (
-    <Contexts>
-      <Wrapper
-        sidebarComponent={
-          <SideBarVisuals selectedGraph={selectedGraph} onSelectChange={handleSelectChange} />
-        }
-      >
-        {renderGraph()}
-      </Wrapper>
-    </Contexts>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Contexts>
+        <Wrapper
+          sidebarComponent={
+            <SideBarVisuals selectedGraph={selectedGraph} onSelectChange={handleSelectChange} />
+          }
+        >
+          {renderGraph()}
+        </Wrapper>
+      </Contexts>
+    </Suspense>
   )
 }
 

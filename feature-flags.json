@@ -1,0 +1,10 @@
+{
+  "develop": {
+    "PLUGIN_PAGE": true,
+    "NETWORK_GRAPH": true,
+    "HEADER_TAB_MENU": true,
+    "FAQ_PAGE": false
+  },
+  "test": {},
+  "production": {}
+}

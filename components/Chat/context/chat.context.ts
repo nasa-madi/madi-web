@@ -262,18 +262,18 @@ export const useChatContext = () => {
     conversationRef.current = conversation
   }, [conversation])
 
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = '50px'
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight + 2}px`
-    }
-  }, [message, textAreaRef])
+  // useEffect(() => {
+  //   if (textAreaRef.current) {
+  //     textAreaRef.current.style.height = '50px'
+  //     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight + 2}px`
+  //   }
+  // }, [message, textAreaRef])
 
-  useEffect(() => {
-    if (bottomOfChatRef.current) {
-      bottomOfChatRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [conversation, currentMessage])
+  // useEffect(() => {
+  //   if (bottomOfChatRef.current) {
+  //     bottomOfChatRef.current.scrollIntoView({ behavior: 'smooth' })
+  //   }
+  // }, [conversation, currentMessage])
 
   useEffect(() => {
     if (currentChatId) {

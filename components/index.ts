@@ -1,5 +1,5 @@
 export * from './Chat'
-export * from './Link'
+// export * from './Link'
 export * from './Spin'
 export * from './Themes'
 export * from './Toaster'

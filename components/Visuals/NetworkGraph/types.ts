@@ -6,7 +6,14 @@ export type NodeDatum = d3.SimulationNodeDatum & {
   label?: string
 }
 
-export type MaturityLevel = 'Low' | 'Medium' | 'High' | 'SuperHigh' | 'X1' | 'whitespace'
+export type MaturityLevel =
+  | 'Low'
+  | 'Medium'
+  | 'High'
+  | 'Super High'
+  | 'X1'
+  | 'whitespace'
+  | 'Execution'
 
 export type SimulationLink = {
   source: NodeDatum

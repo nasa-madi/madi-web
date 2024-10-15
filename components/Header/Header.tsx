@@ -28,6 +28,7 @@ import { useTheme } from '../Themes'
 import { HeaderUser } from './HeaderUser'
 import { usePathname } from 'next/navigation'
 import styles from './Header.module.css'
+import { FlagWith } from '../FeatureFlags/feature-flags'
 
 export interface HeaderProps {
   children?: React.ReactNode
@@ -81,16 +82,18 @@ export const HeaderBar = () => {
           </div>
         </NextLink>
 
-        <Flex gap="3" className="pl-10 md:flex hidden">
-          <TabNav.Root className="shadow-none">
-            <TabNav.Link href="/chat" active={pathname === '/chat' || pathname === '/'}>
-              Chat
-            </TabNav.Link>
-            <TabNav.Link href="/visualization" active={pathname === '/visualization'}>
-              Visualization
-            </TabNav.Link>
-          </TabNav.Root>
-        </Flex>
+        <FlagWith flag="HEADER_TAB_MENU">
+          <Flex gap="3" className="pl-10 md:flex hidden">
+            <TabNav.Root className="shadow-none">
+              <TabNav.Link href="/chat" active={pathname === '/chat' || pathname === '/'}>
+                Chat
+              </TabNav.Link>
+              <TabNav.Link href="/visualization" active={pathname === '/visualization'}>
+                Visualization
+              </TabNav.Link>
+            </TabNav.Root>
+          </Flex>
+        </FlagWith>
 
         <Flex align="center" gap="3" className="ml-auto">
           <HeaderUser />
@@ -109,13 +112,21 @@ export const HeaderBar = () => {
             </Select.Content>
           </Select.Root>
         </Flex>
-        <Tooltip content="Navigation">
-          <Collapsible.Trigger asChild>
-            <IconButton size="2" variant="outline" className="md:hidden" onClick={onToggleSidebar}>
-              <HamburgerMenuIcon width="16" height="16" className="color-white" />
-            </IconButton>
-          </Collapsible.Trigger>
-        </Tooltip>
+
+        <FlagWith flag="HEADER_TAB_MENU">
+          <Tooltip content="Navigation">
+            <Collapsible.Trigger asChild>
+              <IconButton
+                size="2"
+                variant="outline"
+                className="md:hidden"
+                onClick={onToggleSidebar}
+              >
+                <HamburgerMenuIcon width="16" height="16" className="color-white" />
+              </IconButton>
+            </Collapsible.Trigger>
+          </Tooltip>
+        </FlagWith>
       </Flex>
     </header>
   )

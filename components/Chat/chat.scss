@@ -46,3 +46,15 @@
     background-color: var(--accent-a6);
   }
 }
+
+// Remove the tick marks for single lines of code
+.prose :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *))::before,
+.prose :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *))::after {
+  content: '';
+}
+code {
+  background-color: #e8e8e8;
+  padding: 2px 5px 2px 5px;
+  border-radius: 4px;
+  font-weight: 400 !important;
+}

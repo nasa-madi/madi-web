@@ -1,7 +1,7 @@
 'use client'
 
 import { Flex, Text, Button } from '@radix-ui/themes'
-// import { QuestionMarkIcon } from '@radix-ui/react-icons'
+import { QuestionMarkIcon } from '@radix-ui/react-icons'
 import { SlSupport } from 'react-icons/sl'
 import { FaGithub } from 'react-icons/fa6'
 import { IoExtensionPuzzleOutline } from 'react-icons/io5'
@@ -9,6 +9,7 @@ import { IoExtensionPuzzleOutline } from 'react-icons/io5'
 import React from 'react'
 import NextLink from 'next/link'
 import cs from 'classnames'
+import { FlagWith } from '../FeatureFlags/feature-flags'
 
 /**
  * SideBar component that displays the chat list and support button.
@@ -20,21 +21,27 @@ export const SideBar = ({ children }: { children: React.ReactNode }) => {
       <Flex className="p-2 pb-4 h-full overflow-hidden w-64" direction="column" gap="3">
         {children}
         <Flex className="w-full" direction="column" gap="1">
-          <NextLink href="/plugins">
-            <ButtonWrapper>
-              <IoExtensionPuzzleOutline />
-              <Text>Plugins</Text>
-            </ButtonWrapper>
-          </NextLink>
+          <FlagWith flag="PLUGIN_PAGE">
+            <NextLink href="/plugins">
+              <ButtonWrapper>
+                <IoExtensionPuzzleOutline />
+                <Text>Plugins</Text>
+              </ButtonWrapper>
+            </NextLink>
+          </FlagWith>
 
           <ButtonWrapper onClick={() => window.open('mailto:hq-dl-madi@mail.nasa.gov', '_blank')}>
             <SlSupport />
             <Text>Support</Text>
           </ButtonWrapper>
-          {/* <ButtonWrapper onClick={() => window.open('mailto:hq-dl-madi@mail.nasa.gov', '_blank')}>
-          <QuestionMarkIcon />
-          <Text>FAQs</Text>
-        </ButtonWrapper> */}
+
+          <FlagWith flag="FAQ_PAGE">
+            <ButtonWrapper onClick={() => window.open('mailto:hq-dl-madi@mail.nasa.gov', '_blank')}>
+              <QuestionMarkIcon />
+              <Text>FAQs</Text>
+            </ButtonWrapper>
+          </FlagWith>
+
           <ButtonWrapper
             onClick={() => window.open('https://nasa-madi.github.io/madi-core/', '_blank')}
           >

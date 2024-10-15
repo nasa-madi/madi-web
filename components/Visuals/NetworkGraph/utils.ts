@@ -3,6 +3,7 @@
 
 import { NodeDatum, SimulationLink, SimilarityLink, LabelSelection, DragEvent } from './types'
 import * as d3 from 'd3'
+import styles from './NetworkGraph.module.css'
 
 export function drag(simulation: d3.Simulation<NodeDatum, undefined>) {
   function dragstarted(event: DragEvent, d: NodeDatum) {
@@ -143,7 +144,8 @@ export function createSimulation(nodes: any[], links: any[], width: number, heig
 
 export function createLinkElements(
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>,
-  links: any[]
+  links: any[],
+  color: string
 ) {
   return svg
     .append('g')
@@ -151,7 +153,7 @@ export function createLinkElements(
     .data(links)
     .enter()
     .append('line')
-    .attr('stroke', '#999')
+    .attr('stroke', color)
     .attr('stroke-width', 1)
 }
 
@@ -168,7 +170,7 @@ export function createNodeElements(
     .data(nodes)
     .enter()
     .append('path')
-    .attr('d', (d, i) => d3.symbol().type(shapes[i]).size(200)())
+    .attr('d', (d, i) => d3.symbol().type(shapes[i]).size(150)())
     .attr('fill', (d) => d.color)
     .call(dragBehavior)
 }
@@ -184,7 +186,7 @@ export function createLabelElements(
     .data(nodes)
     .enter()
     .append('foreignObject')
-    .attr('class', 'node-label')
+    .attr('class', styles['node-label'])
     .style('visibility', 'hidden')
     .style('pointer-events', 'none')
     .style('z-index', '10') // Add this line to set the z-index
@@ -199,7 +201,7 @@ export function createLabelElements(
 }
 
 export function updateLinkPositions(
-  linkElements: d3.Selection<SVGLineElement, unknown, null, undefined>
+  linkElements: d3.Selection<SVGLineElement, SimulationLink, null, undefined>
 ) {
   linkElements
     .attr('x1', (d) => (d.source as any).x ?? 0)
@@ -209,13 +211,13 @@ export function updateLinkPositions(
 }
 
 export function updateNodePositions(
-  nodeElements: d3.Selection<SVGPathElement, unknown, null, undefined>
+  nodeElements: d3.Selection<SVGPathElement, NodeDatum, null, undefined>
 ) {
   nodeElements.attr('transform', (d) => `translate(${d.x},${d.y})`)
 }
 
 export function updateLabelPositions(
-  labelElements: d3.Selection<SVGForeignObjectElement, unknown, null, undefined>
+  labelElements: d3.Selection<SVGForeignObjectElement, NodeDatum, null, undefined>
 ) {
   labelElements.attr('x', (d) => (d.x ?? 0) + 10).attr('y', (d) => (d.y ?? 0) + 10)
 }
